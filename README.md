@@ -23,13 +23,13 @@ dotnet new install AIGuiders.DotnetMcp.Templates
 ### Create a new MCP server (full pattern)
 
 ```powershell
-dotnet new mcp -n MyCompany.MyMcp --mcp_id my-mcp
+dotnet new mcp -n MyCompany.MyMcp --mcp-id my-mcp
 ```
 
 ### Create a minimal MCP server
 
 ```powershell
-dotnet new mcp-min -n MyCompany.MyMcp --mcp_id my-mcp
+dotnet new mcp-min -n MyCompany.MyMcp --mcp-id my-mcp
 ```
 
 ### Uninstall

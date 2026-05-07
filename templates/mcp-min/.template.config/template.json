@@ -14,7 +14,6 @@
   "symbols": {
     "mcp_id": {
       "type": "parameter",
-      "longName": "mcp-id",
       "datatype": "string",
       "defaultValue": "sample-mcp",
       "description": "MCP id / server key (used in stdio transport name).",
