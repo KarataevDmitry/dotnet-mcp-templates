@@ -4,9 +4,15 @@ Template pack for `dotnet new` to bootstrap MCP servers on .NET.
 
 ### nuget.org publishing (later)
 
-- Create an API key at `nuget.org` → **Account settings** → **API Keys**
-- Add it as GitHub repo secret: `NUGET_API_KEY`
-- Create a tag like `v0.1.5` and push it — workflow publishes the package
+This repo is configured for **Trusted Publishing** (OIDC) — no long-lived API keys.
+
+1) On `nuget.org`: **Trusted publishing** → add policy for GitHub Actions:
+- **Repository owner**: `KarataevDmitry`
+- **Repository**: `dotnet-mcp-templates`
+- **Workflow file**: `publish.yml`
+- **Environment**: (leave empty)
+
+2) Create a tag like `v0.1.5` and push it — workflow publishes the package.
 
 ### Install
 
