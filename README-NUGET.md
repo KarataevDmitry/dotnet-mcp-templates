@@ -2,8 +2,6 @@
 
 Template pack for `dotnet new` to bootstrap MCP servers on .NET.
 
-Release notes: see `docs/release.md`.
-
 ### Install
 
 ```powershell
