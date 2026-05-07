@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AIGuiders.SampleMcp;
+using McpToolManifest;
 
 // Regenerates mcp-tools.manifest.json and docs/MCP-TOOLS.md from ToolCatalog.
 //   JSON on stdout:  dotnet run --project tools/ExportMcpManifest
@@ -46,7 +47,6 @@ var doc = new McpToolManifestDocument
 Console.WriteLine(JsonSerializer.Serialize(doc, new JsonSerializerOptions
 {
     WriteIndented = true,
-    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
 }));
@@ -66,25 +66,10 @@ static void WriteJsonFile(string path, List<ModelContextProtocol.Protocol.Tool> 
         JsonSerializer.Serialize(doc, new JsonSerializerOptions
         {
             WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         }) + Environment.NewLine,
         new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
-}
-
-file sealed record McpToolManifestDocument
-{
-    public int SchemaVersion { get; init; }
-    public string McpId { get; init; } = "";
-    public string? Title { get; init; }
-    public List<McpToolManifestTool> Tools { get; init; } = [];
-}
-
-file sealed record McpToolManifestTool
-{
-    public string Name { get; init; } = "";
-    public string? Description { get; init; }
 }
 
 file static class McpToolsDocMarkdown

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AIGuiders.SampleMcp.csproj" />
+    <ProjectReference Include="..\tools\McpToolManifest\McpToolManifest.csproj" />
   </ItemGroup>
 
   <ItemGroup>

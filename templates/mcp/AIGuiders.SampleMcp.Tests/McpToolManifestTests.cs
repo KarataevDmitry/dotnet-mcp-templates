@@ -1,4 +1,4 @@
-using System.Text.Json;
+using McpToolManifest;
 
 namespace AIGuiders.SampleMcp.Tests;
 
@@ -10,28 +10,22 @@ public sealed class McpToolManifestTests
         var manifestPath = Path.Combine(AppContext.BaseDirectory, "mcp-tools.manifest.json");
         Assert.True(File.Exists(manifestPath), $"Missing copied manifest: {manifestPath}");
 
-        using var doc = JsonDocument.Parse(File.ReadAllText(manifestPath));
-        Assert.True(doc.RootElement.TryGetProperty("schemaVersion", out _), "Missing schemaVersion");
-        Assert.True(doc.RootElement.TryGetProperty("mcpId", out var mcpId), "Missing mcpId");
-        Assert.Equal("sample-mcp", mcpId.GetString());
+        var doc = McpToolManifestReader.Load(manifestPath);
+        var validation = McpToolManifestReader.Validate(doc);
+        Assert.True(validation.Count == 0, string.Join(Environment.NewLine, validation));
 
-        var toolsEl = doc.RootElement.GetProperty("tools");
-        Assert.Equal(JsonValueKind.Array, toolsEl.ValueKind);
-
-        var manifest = toolsEl
-            .EnumerateArray()
-            .Select(t => (Name: t.GetProperty("name").GetString()!, Description: t.GetProperty("description").GetString()))
-            .ToDictionary(t => t.Name, t => t.Description, StringComparer.Ordinal);
+        Assert.Equal("sample-mcp", doc.McpId);
 
         var catalog = ToolCatalog.Build()
             .ToDictionary(t => t.Name!, t => t.Description, StringComparer.Ordinal);
 
-        Assert.Equal(catalog.Count, manifest.Count);
+        var nameDiff = ToolCatalogNameComparer.Compare(doc.Tools.Select(t => t.Name), catalog.Keys);
+        Assert.True(nameDiff.Count == 0, string.Join(Environment.NewLine, nameDiff));
+
+        var manifestByName = doc.Tools.ToDictionary(t => t.Name, t => t.Description, StringComparer.Ordinal);
+        Assert.Equal(catalog.Count, manifestByName.Count);
         foreach (var (name, expectedDesc) in catalog)
-        {
-            Assert.True(manifest.TryGetValue(name, out var actualDesc), $"Missing tool in manifest: {name}");
-            Assert.Equal(expectedDesc, actualDesc);
-        }
+            Assert.Equal(expectedDesc, manifestByName[name]);
     }
 }
 
