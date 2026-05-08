@@ -12,5 +12,5 @@ On `nuget.org`: **Trusted publishing** → add policy for GitHub Actions:
 
 ### Publish a version
 
-Create and push a tag like `v0.1.8` — GitHub Actions workflow `publish.yml` will pack and push the package.
+Create and push a tag like `v0.1.10` — GitHub Actions workflow `publish.yml` will pack and push the package.
 
