@@ -19,6 +19,23 @@ It’s especially useful if you maintain multiple MCP repos and want a consisten
 - `mcp`: full scaffold (recommended for real projects).
 - `mcp-min`: minimal scaffold (good for small experiments).
 
+**Common structure (both templates):**
+
+- `Program.cs`: server bootstrap (stdio transport).
+- `ToolCatalog.cs`: tool definitions (names + descriptions + schemas) in one place.
+- `ToolHandlers.cs`: handler methods that implement the tools.
+
+**`mcp-min` includes:**
+
+- The minimal runnable server + sample tool wiring.
+- No extra automation/testing layers.
+
+**`mcp` (full) additionally includes:**
+
+- **Manifest/docs automation**: generate `mcp-tools.manifest.json` and `docs/MCP-TOOLS.md` from `ToolCatalog`.
+- **Consistency tests**: validate that docs/manifest match the runtime tool catalog.
+- Small shared helpers/libraries used by the automation (so each generated repo doesn’t re-invent the JSON contract).
+
 ### What you get (high level)
 
 The generated project gives you a working starting point with a basic structure for tools/handlers.  
